@@ -13,7 +13,9 @@ const server = http.createServer((req, res) => {
   const { method, url} = req
 
   if(method === 'GET' && url === '/users') {
-    return res.end(JSON.stringify(users))
+    return res
+    .setHeader('Content-type', 'aplication/json')
+    .end(JSON.stringify(users))
   }
   if(method === 'POST' && url === '/users') {
     users.push({
@@ -26,9 +28,9 @@ const server = http.createServer((req, res) => {
       name: 'Oliver Pontes',
       email: 'oliver.pontes@email.com'
     })
-    return res.end('Criação de usuários')
+    return res.writeHead(201).end()
   }
-  return res.end("Hello, World! Testando")
+  return res.writeHead(404).end("Not Found")
 
 })
 
